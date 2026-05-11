@@ -30,23 +30,9 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
     }
   };
 
-  const tweetHref = () => {
-    const target = resolveUrl();
-    return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      title,
-    )}&url=${encodeURIComponent(target)}`;
-  };
-
   return (
     <div className="flex items-center gap-2">
-      <a
-        href={tweetHref()}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 text-xs font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
-      >
-        X에 공유
-      </a>
+      
       <button
         type="button"
         onClick={handleCopy}
