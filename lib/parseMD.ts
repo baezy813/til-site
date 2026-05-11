@@ -4,12 +4,21 @@ import markdownItAnchor from 'markdown-it-anchor';
 import hljs from 'highlight.js';
 import type { Post } from './types';
 
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 const md = new MarkdownIt({
   html: true, // MD 안의 HTML 태그 지원 (rehype-raw 대신)
   linkify: true,
   typographer: true,
   breaks: false,
-  highlight(code, lang) {
+  highlight(code: string, lang: string): string {
     if (lang && hljs.getLanguage(lang)) {
       try {
         return `<pre class="hljs"><code class="language-${lang}">${
@@ -19,7 +28,7 @@ const md = new MarkdownIt({
         /* noop */
       }
     }
-    return `<pre class="hljs"><code>${md.utils.escapeHtml(code)}</code></pre>`;
+    return `<pre class="hljs"><code>${escapeHtml(code)}</code></pre>`;
   },
 }).use(markdownItAnchor, {
   permalink: markdownItAnchor.permalink.linkInsideHeader({
