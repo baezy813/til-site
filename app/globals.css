@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 기본 스크롤바/포커스 가독성 */
+:root {
+  color-scheme: light;
+}
+.dark {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-white text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100;
+}
+
+/* ───────────────────── 마크다운 본문 스타일 ───────────────────── */
+
+.prose-til {
+  @apply text-zinc-800 dark:text-zinc-200;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+.prose-til h1,
+.prose-til h2,
+.prose-til h3,
+.prose-til h4 {
+  @apply font-bold text-zinc-900 dark:text-zinc-50;
+  scroll-margin-top: 5rem;
+}
+
+.prose-til h1 {
+  @apply mt-10 mb-5 text-3xl;
+}
+.prose-til h2 {
+  @apply mt-10 mb-4 text-2xl border-b border-zinc-200 pb-2 dark:border-zinc-800;
+}
+.prose-til h3 {
+  @apply mt-8 mb-3 text-xl;
+}
+.prose-til h4 {
+  @apply mt-6 mb-2 text-lg;
+}
+
+.prose-til p {
+  @apply my-4 leading-relaxed;
+}
+
+.prose-til a {
+  @apply text-brand-600 underline decoration-brand-300 underline-offset-2 transition hover:decoration-brand-500 dark:text-brand-300 dark:decoration-brand-500/60;
+}
+
+.prose-til strong {
+  @apply font-semibold text-zinc-900 dark:text-zinc-50;
+}
+
+.prose-til em {
+  @apply italic;
+}
+
+.prose-til ul,
+.prose-til ol {
+  @apply my-4 pl-6;
+}
+.prose-til ul {
+  @apply list-disc;
+}
+.prose-til ol {
+  @apply list-decimal;
+}
+.prose-til li {
+  @apply my-1.5;
+}
+.prose-til li > p {
+  @apply my-1;
+}
+
+.prose-til blockquote {
+  @apply my-5 border-l-4 border-brand-400 bg-brand-50/40 px-4 py-2 italic text-zinc-700 dark:border-brand-500/60 dark:bg-brand-500/10 dark:text-zinc-200;
+}
+
+.prose-til code {
+  @apply rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-[0.875em] text-pink-600 dark:bg-zinc-800 dark:text-pink-300;
+}
+
+.prose-til pre {
+  @apply my-5 overflow-x-auto rounded-xl bg-zinc-950 p-4 text-sm leading-relaxed text-zinc-100;
+}
+.prose-til pre code {
+  @apply bg-transparent p-0 text-zinc-100 dark:bg-transparent dark:text-zinc-100;
+}
+
+.prose-til hr {
+  @apply my-10 border-zinc-200 dark:border-zinc-800;
+}
+
+.prose-til table {
+  @apply my-6 w-full border-collapse text-left text-sm;
+}
+.prose-til th,
+.prose-til td {
+  @apply border border-zinc-200 px-3 py-2 dark:border-zinc-800;
+}
+.prose-til thead {
+  @apply bg-zinc-50 dark:bg-zinc-900;
+}
+
+.prose-til img {
+  @apply my-6 rounded-xl border border-zinc-200 dark:border-zinc-800;
+  max-width: 100%;
+  height: auto;
+}
+
+/* highlight.js 색상 (라이트/다크 호환 단순 팔레트) */
+.hljs {
+  display: block;
+  overflow-x: auto;
+}
+.hljs-comment,
+.hljs-quote {
+  color: #94a3b8;
+  font-style: italic;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-type {
+  color: #c084fc;
+}
+.hljs-string,
+.hljs-attr,
+.hljs-symbol {
+  color: #86efac;
+}
+.hljs-number,
+.hljs-literal {
+  color: #fbbf24;
+}
+.hljs-title,
+.hljs-name,
+.hljs-section {
+  color: #93c5fd;
+}
+.hljs-variable,
+.hljs-template-variable,
+.hljs-meta {
+  color: #f87171;
+}
+.hljs-tag,
+.hljs-bullet {
+  color: #f9a8d4;
+}
