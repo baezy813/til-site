@@ -4,9 +4,6 @@ import type { Metadata } from 'next';
 import { getAllPosts, REPO_INFO } from '@/lib/getPosts';
 import { ShareButtons } from '@/components/ShareButtons';
 
-export const dynamic = 'force-static';
-export const dynamicParams = false;
-
 interface PageProps {
   params: { slug: string };
 }

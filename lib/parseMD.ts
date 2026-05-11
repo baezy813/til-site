@@ -1,3 +1,4 @@
+import { createHash } from 'crypto';
 import matter from 'gray-matter';
 import MarkdownIt from 'markdown-it';
 import markdownItAnchor from 'markdown-it-anchor';
@@ -86,13 +87,13 @@ function makeExcerpt(text: string, maxLength = 180): string {
 }
 
 /**
- * 한국어/특수문자가 포함될 수 있는 폴더·파일명을 안전한 slug로 변환.
- * GitHub Pages의 URL에 안전하게 들어갈 수 있도록 encodeURIComponent 처리.
+ * 파일 경로를 SHA-256으로 해싱해 8자리 URL-safe slug를 생성.
+ * 한글/공백/특수문자가 들어간 경로여도 항상 [0-9a-f]{8} 형태가 되어
+ * Next.js `output: 'export'`의 디렉토리 이름·URL 인코딩 이슈를 회피.
  */
-export function makeSlug(folder: string, filename: string): string {
-  const cleanName = filename.replace(/\.md$/i, '');
-  const raw = `${folder}__${cleanName}`;
-  return encodeURIComponent(raw).replace(/%20/g, '-');
+export function makeSlug(path: string): string {
+  const cleanPath = path.replace(/\.md$/i, '');
+  return createHash('sha256').update(cleanPath).digest('hex').slice(0, 8);
 }
 
 export interface ParseInput {
@@ -133,7 +134,7 @@ export function parseMD({ path, raw }: ParseInput): Post {
     makeExcerpt(contentText);
 
   return {
-    slug: makeSlug(folder, filename),
+    slug: makeSlug(path),
     title,
     date,
     folder,

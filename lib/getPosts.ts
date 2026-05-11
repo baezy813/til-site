@@ -53,12 +53,29 @@ async function gh<T>(url: string): Promise<T> {
 }
 
 /**
+ * 빌드 동안 generateStaticParams / generateMetadata / 페이지 컴포넌트가
+ * 각각 getAllPosts를 호출하므로 모듈 스코프에서 한 번만 fetch하도록 메모이즈.
+ * (인증 없는 GitHub API는 IP당 시간당 60회로 제한됨.)
+ */
+let postsCache: Promise<Post[]> | null = null;
+
+/**
  * 1. branch의 최신 commit sha 조회
  * 2. recursive tree 호출로 모든 .md 파일 경로 수집
  * 3. raw.githubusercontent.com에서 각 파일 본문 fetch
  * 4. parseMD로 변환
  */
-export async function getAllPosts(): Promise<Post[]> {
+export function getAllPosts(): Promise<Post[]> {
+  if (!postsCache) {
+    postsCache = fetchAllPosts().catch((err) => {
+      postsCache = null; // 실패하면 다음 호출에서 재시도 가능하도록 캐시 폐기
+      throw err;
+    });
+  }
+  return postsCache;
+}
+
+async function fetchAllPosts(): Promise<Post[]> {
   const branch = await gh<BranchResponse>(
     `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/branches/${REPO_BRANCH}`,
   );
